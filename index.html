@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Choice bd - প্রিমিয়াম গ্যাজেট ও অ্যাক্সেসরিজ</title>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -18,15 +17,15 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 70px; }
+        body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 75px; }
 
         /* Top Announcement Bar */
-        .top-bar { background-color: #1a56db; color: white; text-align: center; padding: 6px 10px; font-size: 13px; font-weight: bold; }
+        .top-bar { background-color: #1a56db; color: white; text-align: center; padding: 6px 10px; font-size: 12px; font-weight: bold; }
 
         /* Header */
         header { background: white; padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .logo { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 4px; }
+        .logo { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; }
         .logo span { color: #2563eb; }
         .header-actions { display: flex; align-items: center; gap: 10px; }
         .lang-btn { background: #eff6ff; color: var(--primary); border: none; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; }
@@ -38,25 +37,23 @@
         .search-input { width: 100%; padding: 10px 12px 10px 38px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; font-size: 13px; outline: none; }
         .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px; }
 
-        /* Container */
         .container { max-width: 800px; margin: 0 auto; padding: 15px; }
 
+        /* Page Views (Single Page App Navigation) */
+        .page-view { display: none; }
+        .page-view.active { display: block; }
+
         /* Hero Banner */
-        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
         .badge { display: inline-block; background: rgba(255,255,255,0.1); color: #38bdf8; font-size: 11px; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; font-weight: 600; }
-        .hero h2 { font-size: 22px; line-height: 1.3; margin-bottom: 10px; }
-        .hero p { font-size: 12px; color: #94a3b8; margin-bottom: 16px; line-height: 1.5; }
+        .hero h2 { font-size: 20px; line-height: 1.3; margin-bottom: 10px; }
+        .hero p { font-size: 12px; color: #94a3b8; margin-bottom: 16px; }
         .hero-btns { display: flex; gap: 10px; }
         .btn-primary { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
         .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
 
-        /* Features strip */
-        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 10px; color: #cbd5e1; }
-
-        /* Section Title */
-        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-
-        /* Product Cards */
+        /* Products Grid */
+        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
         .products-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 480px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -66,31 +63,29 @@
         .product-info { padding: 12px; }
         .category-name { font-size: 11px; color: var(--text-gray); margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
         .rating { color: #f59e0b; font-weight: bold; font-size: 11px; }
-        .product-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); line-height: 1.3; }
-        .stock-status { font-size: 11px; color: #16a34a; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+        .product-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
+        .stock-status { font-size: 11px; color: #16a34a; font-weight: 600; margin-bottom: 8px; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
         .price { font-size: 16px; font-weight: 800; color: var(--text-dark); }
-        .old-price { font-size: 12px; color: #94a3b8; text-decoration: line-through; margin-left: 4px; font-weight: normal; }
+        .old-price { font-size: 12px; color: #94a3b8; text-decoration: line-through; margin-left: 4px; }
         .add-cart-btn { background: var(--primary); color: white; border: none; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* Guarantee Box */
-        .guarantee-box { background: #0f172a; color: white; border-radius: 12px; padding: 15px; margin: 25px 0; }
-        .guarantee-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
-        .guarantee-item:last-child { margin-bottom: 0; }
-        .guarantee-icon { background: rgba(255,255,255,0.1); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #38bdf8; flex-shrink: 0; }
-        .guarantee-text h4 { font-size: 13px; font-weight: 700; }
-        .guarantee-text p { font-size: 11px; color: #94a3b8; }
+        /* Admin Dashboard UI (Matching Screenshot) */
+        .admin-header { background: #0f172a; color: white; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .stat-card { background: white; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .stat-title { font-size: 12px; color: var(--text-gray); margin-bottom: 4px; }
+        .stat-value { font-size: 20px; font-weight: 800; color: var(--text-dark); }
+        .stat-sub { font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 4px; }
+
+        .alert-box { background: #fffbebfb; border: 1px solid #fef3c7; border-radius: 12px; padding: 12px; margin-bottom: 15px; }
+        .alert-title { font-size: 12px; font-weight: 700; color: #b45309; display: flex; align-items: center; gap: 6px; }
 
         /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding: 8px 0; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #64748b; font-size: 10px; font-weight: 600; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #64748b; font-size: 11px; font-weight: 600; cursor: pointer; border: none; background: none; }
         .nav-item.active { color: var(--primary); }
-        .nav-item i { font-size: 16px; }
-
-        /* Admin Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-content { background: white; border-radius: 16px; width: 100%; max-width: 380px; padding: 20px; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; border: none; background: none; font-size: 18px; color: #64748b; cursor: pointer; }
+        .nav-item i { font-size: 18px; }
     </style>
 </head>
 <body>
@@ -103,11 +98,11 @@
     <!-- Header -->
     <header>
         <div class="header-top">
-            <a href="#" class="logo">Smart Choice <span>bd</span></a>
+            <a href="#" class="logo" onclick="switchPage('home')">Smart Choice <span>bd</span></a>
             <div class="header-actions">
                 <button class="lang-btn">বাংলা | EN</button>
-                <button class="icon-btn" onclick="toggleAdminModal()"><i class="fa-solid fa-user"></i></button>
-                <button class="icon-btn">
+                <button class="icon-btn" onclick="switchPage('admin')"><i class="fa-solid fa-user"></i></button>
+                <button class="icon-btn" onclick="switchPage('bag')">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span class="cart-badge" id="cart-count">0</span>
                 </button>
@@ -119,66 +114,45 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <div class="container">
-        <!-- Hero Banner -->
-        <div class="hero">
-            <span class="badge"><i class="fa-regular fa-circle-check"></i> ১০০% অরিজিনাল গ্যাজেট</span>
-            <h2>আপনার ডিজিটাল লাইফস্টাইলকে করুন আরও আধুনিক</h2>
-            <p>অরিজিনাল হেডফোন, স্মার্টওয়াচ ও ফাস্ট চার্জার সামগ্রী সারা দেশে ক্যাশ অন ডেলিভারিতে।</p>
-            <div class="hero-btns">
-                <a href="#products" class="btn-primary">সব পণ্য <i class="fa-solid fa-arrow-right"></i></a>
-                <button class="btn-secondary">পণ্য ক্যাটাগরি</button>
-            </div>
-            <div class="features">
-                <div>৮৩,০০০+ ফ্রি ডেলিভারি</div>
-                <div>Cash on Delivery বাংলাদেশে প্রাপ্য</div>
-                <div>100% Genuine অরিজিনাল গ্যারান্টি</div>
-            </div>
-        </div>
 
-        <!-- Products Section -->
-        <div id="products">
-            <div class="section-title">
-                <span>আকর্ষণীয় গ্যাজেট ও পণ্যসমূহ</span>
+        <!-- 1. HOME PAGE VIEW -->
+        <div id="page-home" class="page-view active">
+            <div class="hero">
+                <span class="badge"><i class="fa-regular fa-circle-check"></i> ১০০% অরিজিনাল গ্যাজেট</span>
+                <h2>আপনার ডিজিটাল লাইফস্টাইলকে করুন আরও আধুনিক</h2>
+                <p>অরিজিনাল হেডফোন, স্মার্টওয়াচ ও ফাস্ট চার্জার সামগ্রী সারা দেশে ক্যাশ অন ডেলিভারিতে।</p>
+                <div class="hero-btns">
+                    <button class="btn-primary" onclick="switchPage('category')">সব পণ্য <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-secondary" onclick="switchPage('category')">পণ্য ক্যাটাগরি</button>
+                </div>
             </div>
 
+            <div class="section-title">আকর্ষণীয় গ্যাজেট ও পণ্যসমূহ</div>
             <div class="products-grid">
-                <!-- Product 1 -->
                 <div class="product-card">
                     <span class="discount-tag">-২৪% ছাড়</span>
                     <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600" class="product-img" alt="Headphone">
                     <div class="product-info">
-                        <div class="category-name">
-                            হেডফোন ও অডিও • <span class="rating"><i class="fa-solid fa-star"></i> 4.9</span>
-                        </div>
+                        <div class="category-name">হেডফোন ও অডিও • <span class="rating"><i class="fa-solid fa-star"></i> 4.9</span></div>
                         <div class="product-title">অরাসাউন্ড স্পেক্ট্রা ওয়্যারলেস এএনসি হেডফোন</div>
                         <div class="stock-status"><i class="fa-solid fa-check"></i> স্টকে আছে</div>
                         <div class="price-row">
-                            <div>
-                                <span class="price">৳৪,৯৫০</span>
-                                <span class="old-price">৳৬,৫০০</span>
-                            </div>
+                            <div><span class="price">৳৪,৯৫০</span> <span class="old-price">৳৬,৫০০</span></div>
                             <button class="add-cart-btn" onclick="addToCart()"><i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Product 2 -->
                 <div class="product-card">
                     <span class="discount-tag">-২০% ছাড়</span>
                     <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600" class="product-img" alt="Smartwatch">
                     <div class="product-info">
-                        <div class="category-name">
-                            স্মার্টওয়াচ ও ফিটনেস ব্যান্ড • <span class="rating"><i class="fa-solid fa-star"></i> 4.8</span>
-                        </div>
+                        <div class="category-name">স্মার্টওয়াচ ও ফিটনেস ব্যান্ড • <span class="rating"><i class="fa-solid fa-star"></i> 4.8</span></div>
                         <div class="product-title">টাইটানএজ প্রো অ্যামোলেড কলিং স্মার্টওয়াচ</div>
                         <div class="stock-status"><i class="fa-solid fa-check"></i> স্টকে আছে</div>
                         <div class="price-row">
-                            <div>
-                                <span class="price">৳৩,৮৫০</span>
-                                <span class="old-price">৳৪,৮০০</span>
-                            </div>
+                            <div><span class="price">৳৩,৮৫০</span> <span class="old-price">৳৪,৮০০</span></div>
                             <button class="add-cart-btn" onclick="addToCart()"><i class="fa-solid fa-bag-shopping"></i></button>
                         </div>
                     </div>
@@ -186,59 +160,90 @@
             </div>
         </div>
 
-        <!-- Features Guarantee Box -->
-        <div class="guarantee-box">
-            <div class="guarantee-item">
-                <div class="guarantee-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                <div class="guarantee-text">
-                    <h4>দ্রুততম হোম ডেলিভারি</h4>
-                    <p>ঢাকা সিটিতে ২৪-৪৮ ঘণ্টায় এবং সারাদেশে ৩-৫ দিনে ক্যাশ অন ডেলিভারি।</p>
+        <!-- 2. CATEGORY PAGE VIEW -->
+        <div id="page-category" class="page-view">
+            <div class="section-title">সকল ক্যাটাগরি ও পণ্য</div>
+            <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 15px;">আপনার পছন্দ অনুযায়ী ক্যাটাগরি বেছে নিন:</p>
+            <div class="products-grid">
+                <div class="product-card" style="padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-headphones" style="font-size: 30px; color: var(--primary); margin-bottom: 8px;"></i>
+                    <h4>হেডফোন ও অডিও</h4>
                 </div>
-            </div>
-            <div class="guarantee-item">
-                <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                <div class="guarantee-text">
-                    <h4>ক্যাশ অন ডেলিভারি</h4>
-                    <p>পণ্য হাতে পেয়ে চেক করে মূল্য পরিশোধের ১০০% নিরাপদ সুবিধা।</p>
-                </div>
-            </div>
-            <div class="guarantee-item">
-                <div class="guarantee-icon"><i class="fa-solid fa-certificate"></i></div>
-                <div class="guarantee-text">
-                    <h4>অরিজিনাল পণ্যের নিশ্চয়তা</h4>
-                    <p>১০০% আসল প্রোডাক্ট এবং নির্ধারিত ওয়ারেন্টি সুবিধা।</p>
+                <div class="product-card" style="padding: 15px; text-align: center;">
+                    <i class="fa-solid fa-stopwatch" style="font-size: 30px; color: var(--primary); margin-bottom: 8px;"></i>
+                    <h4>স্মার্টওয়াচ</h4>
                 </div>
             </div>
         </div>
+
+        <!-- 3. BAG / CART VIEW -->
+        <div id="page-bag" class="page-view">
+            <div class="section-title">আপনার শপিং ব্যাগ</div>
+            <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0;">
+                <i class="fa-solid fa-bag-shopping" style="font-size: 40px; color: var(--text-gray); margin-bottom: 10px;"></i>
+                <p style="font-size: 14px; font-weight: 600;">আপনার ব্যাগ বর্তমানে খালি রয়েছে</p>
+                <button class="btn-primary" style="margin-top: 15px;" onclick="switchPage('home')">শপিং শুরু করুন</button>
+            </div>
+        </div>
+
+        <!-- 4. TRACK ORDER VIEW -->
+        <div id="page-track" class="page-view">
+            <div class="section-title">অর্ডার ট্র্যাক করুন</div>
+            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 6px;">অর্ডার আইডি বা ফোন নম্বর দিন:</label>
+                <input type="text" class="search-input" placeholder="e.g. #ORD-12345" style="margin-bottom: 12px; padding-left: 12px;">
+                <button class="btn-primary" style="width: 100%; justify-content: center;">স্ট্যাটাস দেখুন</button>
+            </div>
+        </div>
+
+        <!-- 5. ADMIN DASHBOARD VIEW (Screenshot Replica) -->
+        <div id="page-admin" class="page-view">
+            <div class="admin-header">
+                <div>
+                    <h3 style="font-size: 16px;">Smart Choice bd</h3>
+                    <p style="font-size: 11px; opacity: 0.8;">এডমিন পোর্টাল ড্যাশবোর্ড</p>
+                </div>
+                <button style="background: rgba(255,255,255,0.15); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px;" onclick="switchPage('home')">লগআউট</button>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-title">মোট বিক্রয়</div>
+                    <div class="stat-value">৳৮,৯৮০</div>
+                    <div class="stat-sub">↗ Verified Deliveries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">মোট অর্ডার</div>
+                    <div class="stat-value">২</div>
+                    <div class="stat-sub" style="color: var(--text-gray);">০ অপেক্ষমাণ অর্ডার</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">লাইভ পণ্য</div>
+                    <div class="stat-value">৬</div>
+                    <div class="stat-sub" style="color: var(--text-gray);">Across 5 categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">লো-স্টক অ্যালার্ট</div>
+                    <div class="stat-value" style="color: #d97706;">১</div>
+                    <div class="stat-sub" style="color: #d97706;">Needs restock (≤ 5 items)</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <div class="alert-title"><i class="fa-solid fa-triangle-exclamation"></i> Low Stock Inventory Warning</div>
+                <p style="font-size: 12px; margin-top: 5px;">AeroStand Ergonomic Aluminum Laptop Stand <strong style="color: #dc2626;">Only 5 units remaining</strong></p>
+            </div>
+        </div>
+
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="bottom-nav">
-        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> হোম</a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-grid-2"></i> ক্যাটাগরি</a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-bag-shopping"></i> ব্যাগ</a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-truck"></i> ট্র্যাক</a>
-        <a href="#" class="nav-item" onclick="toggleAdminModal()"><i class="fa-solid fa-user-gear"></i> এডমিন</a>
-    </div>
-
-    <!-- Admin Login Modal -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="toggleAdminModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="margin-bottom: 15px; font-size: 16px;"><i class="fa-solid fa-shield"></i> এডমিন পোর্টাল লগইন</h3>
-            <div style="background: #eff6ff; padding: 10px; border-radius: 8px; font-size: 11px; margin-bottom: 15px; color: #1e40af;">
-                <strong>Demo Admin Credentials:</strong><br>admin@smartchoicebd.com / admin123
-            </div>
-            <div style="margin-bottom: 10px;">
-                <label style="font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px;">Email Address</label>
-                <input type="text" value="admin@smartchoicebd.com" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px;">
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label style="font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px;">পাসওয়ার্ড</label>
-                <input type="password" value="12345678" style="width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px;">
-            </div>
-            <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="alert('এডমিন প্যানেলে স্বাগতম!')">লগইন করুন</button>
-        </div>
+        <button class="nav-item active" onclick="switchPage('home', this)"><i class="fa-solid fa-house"></i> হোম</button>
+        <button class="nav-item" onclick="switchPage('category', this)"><i class="fa-solid fa-grip"></i> ক্যাটাগরি</button>
+        <button class="nav-item" onclick="switchPage('bag', this)"><i class="fa-solid fa-bag-shopping"></i> ব্যাগ</button>
+        <button class="nav-item" onclick="switchPage('track', this)"><i class="fa-solid fa-truck"></i> ট্র্যাক</button>
+        <button class="nav-item" onclick="switchPage('admin', this)"><i class="fa-solid fa-user-gear"></i> এডমিন</button>
     </div>
 
     <script>
@@ -249,17 +254,25 @@
             alert('পণ্যটি সফলভাবে ব্যাগে যোগ করা হয়েছে!');
         }
 
-        function toggleAdminModal() {
-            const modal = document.getElementById('adminModal');
-            if (modal.style.display === 'flex') {
-                modal.style.display = 'none';
-            } else {
-                modal.style.display = 'flex';
+        function switchPage(pageId, element) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            // Update Bottom Nav active state
+            if (element) {
+                const navItems = document.querySelectorAll('.nav-item');
+                navItems.forEach(item => item.classList.remove('active'));
+                element.classList.add('active');
             }
+
+            window.scrollTo(0, 0);
         }
     </script>
 </body>
 </html>
-
 
 
