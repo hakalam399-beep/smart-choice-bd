@@ -1,278 +1,232 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Choice bd - প্রিমিয়াম গ্যাজেট ও অ্যাক্সেসরিজ</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #1d4ed8;
-            --primary-dark: #1e40af;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-dark: #0f172a;
-            --text-gray: #64748b;
-            --accent: #22c55e;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 75px; }
-
-        /* Top Announcement Bar */
-        .top-bar { background-color: #1a56db; color: white; text-align: center; padding: 6px 10px; font-size: 12px; font-weight: bold; }
-
-        /* Header */
-        header { background: white; padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .logo { font-size: 20px; font-weight: 800; color: var(--primary); text-decoration: none; }
-        .logo span { color: #2563eb; }
-        .header-actions { display: flex; align-items: center; gap: 10px; }
-        .lang-btn { background: #eff6ff; color: var(--primary); border: none; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; }
-        .icon-btn { background: #f1f5f9; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #334155; position: relative; cursor: pointer; }
-        .cart-badge { position: absolute; top: -2px; right: -2px; background: #ef4444; color: white; border-radius: 10px; padding: 2px 6px; font-size: 10px; font-weight: bold; }
-
-        /* Search Bar */
-        .search-container { position: relative; }
-        .search-input { width: 100%; padding: 10px 12px 10px 38px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; font-size: 13px; outline: none; }
-        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 14px; }
-
-        .container { max-width: 800px; margin: 0 auto; padding: 15px; }
-
-        /* Page Views (Single Page App Navigation) */
-        .page-view { display: none; }
-        .page-view.active { display: block; }
-
-        /* Hero Banner */
-        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-        .badge { display: inline-block; background: rgba(255,255,255,0.1); color: #38bdf8; font-size: 11px; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; font-weight: 600; }
-        .hero h2 { font-size: 20px; line-height: 1.3; margin-bottom: 10px; }
-        .hero p { font-size: 12px; color: #94a3b8; margin-bottom: 16px; }
-        .hero-btns { display: flex; gap: 10px; }
-        .btn-primary { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
-
-        /* Products Grid */
-        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
-        .products-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media (min-width: 480px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-
-        .product-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; position: relative; }
-        .discount-tag { position: absolute; top: 10px; left: 10px; background: #ef4444; color: white; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 12px; z-index: 1; }
-        .product-img { width: 100%; height: 200px; object-fit: cover; background: #f1f5f9; }
-        .product-info { padding: 12px; }
-        .category-name { font-size: 11px; color: var(--text-gray); margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
-        .rating { color: #f59e0b; font-weight: bold; font-size: 11px; }
-        .product-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-dark); }
-        .stock-status { font-size: 11px; color: #16a34a; font-weight: 600; margin-bottom: 8px; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .price { font-size: 16px; font-weight: 800; color: var(--text-dark); }
-        .old-price { font-size: 12px; color: #94a3b8; text-decoration: line-through; margin-left: 4px; }
-        .add-cart-btn { background: var(--primary); color: white; border: none; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
-        /* Admin Dashboard UI (Matching Screenshot) */
-        .admin-header { background: #0f172a; color: white; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .admin-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
-        .stat-card { background: white; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; }
-        .stat-title { font-size: 12px; color: var(--text-gray); margin-bottom: 4px; }
-        .stat-value { font-size: 20px; font-weight: 800; color: var(--text-dark); }
-        .stat-sub { font-size: 11px; color: #16a34a; font-weight: 600; margin-top: 4px; }
-
-        .alert-box { background: #fffbebfb; border: 1px solid #fef3c7; border-radius: 12px; padding: 12px; margin-bottom: 15px; }
-        .alert-title { font-size: 12px; font-weight: 700; color: #b45309; display: flex; align-items: center; gap: 6px; }
-
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #64748b; font-size: 11px; font-weight: 600; cursor: pointer; border: none; background: none; }
-        .nav-item.active { color: var(--primary); }
-        .nav-item i { font-size: 18px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Choice BD - Online Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800 font-sans">
 
-    <!-- Top Announcement -->
-    <div class="top-bar">
-        ৮৩,০০০ টাকার বেশি অর্ডারে সমগ্র বাংলাদেশে সম্পূর্ণ ফ্রি ডেলিভারি! 🇧🇩
+  <!-- Header / Navbar -->
+  <header class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <h1 class="text-xl font-bold">Smart Choice BD</h1>
+      <div class="flex items-center space-x-4">
+        <button onclick="toggleCart()" class="relative bg-blue-700 px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center">
+          <i class="fas fa-shopping-cart mr-1"></i> কার্ট
+          <span id="cart-count" class="ml-2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs">0</span>
+        </button>
+        <button onclick="toggleAdminModal()" class="text-sm bg-blue-800 hover:bg-blue-900 px-2 py-1 rounded">এডমিন</button>
+      </div>
     </div>
+  </header>
 
-    <!-- Header -->
-    <header>
-        <div class="header-top">
-            <a href="#" class="logo" onclick="switchPage('home')">Smart Choice <span>bd</span></a>
-            <div class="header-actions">
-                <button class="lang-btn">বাংলা | EN</button>
-                <button class="icon-btn" onclick="switchPage('admin')"><i class="fa-solid fa-user"></i></button>
-                <button class="icon-btn" onclick="switchPage('bag')">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span class="cart-badge" id="cart-count">0</span>
-                </button>
-            </div>
-        </div>
-        <div class="search-container">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" class="search-input" placeholder="হেডফোন, স্মার্টওয়াচ, গ্যাজেট বা পণ্য খুঁজুন...">
-        </div>
-    </header>
+  <!-- Banner -->
+  <section class="bg-blue-500 text-white text-center py-8 px-4">
+    <h2 class="text-2xl font-bold mb-2">স্মার্ট চয়েস বিডি-তে আপনাকে স্বাগতম!</h2>
+    <p class="text-sm">সেরা দামে সেরা পোশাক ও গ্যাজেট কিনুন চট্টগ্রাম সহ সারা বাংলাদেশে।</p>
+  </section>
 
-    <div class="container">
-
-        <!-- 1. HOME PAGE VIEW -->
-        <div id="page-home" class="page-view active">
-            <div class="hero">
-                <span class="badge"><i class="fa-regular fa-circle-check"></i> ১০০% অরিজিনাল গ্যাজেট</span>
-                <h2>আপনার ডিজিটাল লাইফস্টাইলকে করুন আরও আধুনিক</h2>
-                <p>অরিজিনাল হেডফোন, স্মার্টওয়াচ ও ফাস্ট চার্জার সামগ্রী সারা দেশে ক্যাশ অন ডেলিভারিতে।</p>
-                <div class="hero-btns">
-                    <button class="btn-primary" onclick="switchPage('category')">সব পণ্য <i class="fa-solid fa-arrow-right"></i></button>
-                    <button class="btn-secondary" onclick="switchPage('category')">পণ্য ক্যাটাগরি</button>
-                </div>
-            </div>
-
-            <div class="section-title">আকর্ষণীয় গ্যাজেট ও পণ্যসমূহ</div>
-            <div class="products-grid">
-                <div class="product-card">
-                    <span class="discount-tag">-২৪% ছাড়</span>
-                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600" class="product-img" alt="Headphone">
-                    <div class="product-info">
-                        <div class="category-name">হেডফোন ও অডিও • <span class="rating"><i class="fa-solid fa-star"></i> 4.9</span></div>
-                        <div class="product-title">অরাসাউন্ড স্পেক্ট্রা ওয়্যারলেস এএনসি হেডফোন</div>
-                        <div class="stock-status"><i class="fa-solid fa-check"></i> স্টকে আছে</div>
-                        <div class="price-row">
-                            <div><span class="price">৳৪,৯৫০</span> <span class="old-price">৳৬,৫০০</span></div>
-                            <button class="add-cart-btn" onclick="addToCart()"><i class="fa-solid fa-bag-shopping"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <span class="discount-tag">-২০% ছাড়</span>
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600" class="product-img" alt="Smartwatch">
-                    <div class="product-info">
-                        <div class="category-name">স্মার্টওয়াচ ও ফিটনেস ব্যান্ড • <span class="rating"><i class="fa-solid fa-star"></i> 4.8</span></div>
-                        <div class="product-title">টাইটানএজ প্রো অ্যামোলেড কলিং স্মার্টওয়াচ</div>
-                        <div class="stock-status"><i class="fa-solid fa-check"></i> স্টকে আছে</div>
-                        <div class="price-row">
-                            <div><span class="price">৳৩,৮৫০</span> <span class="old-price">৳৪,৮০০</span></div>
-                            <button class="add-cart-btn" onclick="addToCart()"><i class="fa-solid fa-bag-shopping"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. CATEGORY PAGE VIEW -->
-        <div id="page-category" class="page-view">
-            <div class="section-title">সকল ক্যাটাগরি ও পণ্য</div>
-            <p style="color: var(--text-gray); font-size: 13px; margin-bottom: 15px;">আপনার পছন্দ অনুযায়ী ক্যাটাগরি বেছে নিন:</p>
-            <div class="products-grid">
-                <div class="product-card" style="padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-headphones" style="font-size: 30px; color: var(--primary); margin-bottom: 8px;"></i>
-                    <h4>হেডফোন ও অডিও</h4>
-                </div>
-                <div class="product-card" style="padding: 15px; text-align: center;">
-                    <i class="fa-solid fa-stopwatch" style="font-size: 30px; color: var(--primary); margin-bottom: 8px;"></i>
-                    <h4>স্মার্টওয়াচ</h4>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. BAG / CART VIEW -->
-        <div id="page-bag" class="page-view">
-            <div class="section-title">আপনার শপিং ব্যাগ</div>
-            <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0;">
-                <i class="fa-solid fa-bag-shopping" style="font-size: 40px; color: var(--text-gray); margin-bottom: 10px;"></i>
-                <p style="font-size: 14px; font-weight: 600;">আপনার ব্যাগ বর্তমানে খালি রয়েছে</p>
-                <button class="btn-primary" style="margin-top: 15px;" onclick="switchPage('home')">শপিং শুরু করুন</button>
-            </div>
-        </div>
-
-        <!-- 4. TRACK ORDER VIEW -->
-        <div id="page-track" class="page-view">
-            <div class="section-title">অর্ডার ট্র্যাক করুন</div>
-            <div style="background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 6px;">অর্ডার আইডি বা ফোন নম্বর দিন:</label>
-                <input type="text" class="search-input" placeholder="e.g. #ORD-12345" style="margin-bottom: 12px; padding-left: 12px;">
-                <button class="btn-primary" style="width: 100%; justify-content: center;">স্ট্যাটাস দেখুন</button>
-            </div>
-        </div>
-
-        <!-- 5. ADMIN DASHBOARD VIEW (Screenshot Replica) -->
-        <div id="page-admin" class="page-view">
-            <div class="admin-header">
-                <div>
-                    <h3 style="font-size: 16px;">Smart Choice bd</h3>
-                    <p style="font-size: 11px; opacity: 0.8;">এডমিন পোর্টাল ড্যাশবোর্ড</p>
-                </div>
-                <button style="background: rgba(255,255,255,0.15); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px;" onclick="switchPage('home')">লগআউট</button>
-            </div>
-
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <div class="stat-title">মোট বিক্রয়</div>
-                    <div class="stat-value">৳৮,৯৮০</div>
-                    <div class="stat-sub">↗ Verified Deliveries</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">মোট অর্ডার</div>
-                    <div class="stat-value">২</div>
-                    <div class="stat-sub" style="color: var(--text-gray);">০ অপেক্ষমাণ অর্ডার</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">লাইভ পণ্য</div>
-                    <div class="stat-value">৬</div>
-                    <div class="stat-sub" style="color: var(--text-gray);">Across 5 categories</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">লো-স্টক অ্যালার্ট</div>
-                    <div class="stat-value" style="color: #d97706;">১</div>
-                    <div class="stat-sub" style="color: #d97706;">Needs restock (≤ 5 items)</div>
-                </div>
-            </div>
-
-            <div class="alert-box">
-                <div class="alert-title"><i class="fa-solid fa-triangle-exclamation"></i> Low Stock Inventory Warning</div>
-                <p style="font-size: 12px; margin-top: 5px;">AeroStand Ergonomic Aluminum Laptop Stand <strong style="color: #dc2626;">Only 5 units remaining</strong></p>
-            </div>
-        </div>
-
+  <!-- Product Grid -->
+  <main class="container mx-auto px-4 py-6">
+    <h3 class="text-xl font-bold mb-4 border-b-2 border-blue-600 pb-1 inline-block">আমাদের পণ্যসমূহ</h3>
+    <div id="product-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Products will render here dynamically -->
     </div>
+  </main>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav">
-        <button class="nav-item active" onclick="switchPage('home', this)"><i class="fa-solid fa-house"></i> হোম</button>
-        <button class="nav-item" onclick="switchPage('category', this)"><i class="fa-solid fa-grip"></i> ক্যাটাগরি</button>
-        <button class="nav-item" onclick="switchPage('bag', this)"><i class="fa-solid fa-bag-shopping"></i> ব্যাগ</button>
-        <button class="nav-item" onclick="switchPage('track', this)"><i class="fa-solid fa-truck"></i> ট্র্যাক</button>
-        <button class="nav-item" onclick="switchPage('admin', this)"><i class="fa-solid fa-user-gear"></i> এডমিন</button>
+  <!-- Cart Drawer/Modal -->
+  <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-end">
+    <div class="bg-white w-full max-w-md h-full p-4 overflow-y-auto flex flex-col justify-between">
+      <div>
+        <div class="flex justify-between items-center border-b pb-2 mb-4">
+          <h3 class="text-lg font-bold">আপনার শপিং কার্ট</h3>
+          <button onclick="toggleCart()" class="text-gray-500 text-xl">&times;</button>
+        </div>
+        <div id="cart-items" class="space-y-3">
+          <p class="text-gray-500 text-center py-4">কার্ট খালি রয়েছে</p>
+        </div>
+      </div>
+      <div class="border-t pt-4 mt-4">
+        <div class="flex justify-between font-bold mb-4">
+          <span>মোট মূল্য:</span>
+          <span>৳ <span id="cart-total">0</span></span>
+        </div>
+        <button onclick="showCheckout()" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700">অর্ডার সম্পন্ন করুন</button>
+      </div>
     </div>
+  </div>
 
-    <script>
-        let cart = 0;
-        function addToCart() {
-            cart++;
-            document.getElementById('cart-count').innerText = cart;
-            alert('পণ্যটি সফলভাবে ব্যাগে যোগ করা হয়েছে!');
-        }
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-md w-full p-6 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeCheckout()" class="absolute top-2 right-4 text-gray-500 text-2xl">&times;</button>
+      <h3 class="text-xl font-bold mb-4 text-center">কাস্টমার তথ্য ও অর্ডার</h3>
+      <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-3">
+        <div>
+          <label class="block text-sm font-semibold">আপনার নাম:</label>
+          <input type="text" id="cust-name" required class="w-full border rounded p-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold">মোবাইল নাম্বার:</label>
+          <input type="tel" id="cust-phone" required class="w-full border rounded p-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold">ডেলিভারি ঠিকানা:</label>
+          <textarea id="cust-address" required class="w-full border rounded p-2 text-sm" rows="2"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold">পেমেন্ট মেথড:</label>
+          <select id="cust-payment" class="w-full border rounded p-2 text-sm">
+            <option value="Cash on Delivery">ক্যাশ অন ডেলিভারি</option>
+            <option value="bKash / Nagad">বিকাশ / নগদ (01875184743)</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 mt-2">হোয়াটসঅ্যাপে অর্ডার পাঠান</button>
+      </form>
+    </div>
+  </div>
 
-        function switchPage(pageId, element) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(page => page.classList.remove('active'));
+  <!-- Admin Login Modal -->
+  <div id="admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-sm w-full p-6 relative">
+      <button onclick="toggleAdminModal()" class="absolute top-2 right-4 text-gray-500 text-2xl">&times;</button>
+      <h3 class="text-xl font-bold mb-4 text-center">এডমিন লগইন</h3>
+      <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+        <div>
+          <label class="block text-sm font-semibold">ইমেইল:</label>
+          <input type="email" id="admin-email" required class="w-full border rounded p-2 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold">পাসওয়ার্ড:</label>
+          <input type="password" id="admin-pass" required class="w-full border rounded p-2 text-sm">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700">লগইন</button>
+      </form>
+    </div>
+  </div>
 
-            // Show selected page
-            document.getElementById('page-' + pageId).classList.add('active');
+  <script>
+    // Initial Products Data
+    let products = [
+      { id: 1, name: "প্রিমিয়াম কটন টি-শার্ট", price: 350, image: "https://via.placeholder.com/150" },
+      { id: 2, name: "স্টাইলিশ জ্যাকেট", price: 1200, image: "https://via.placeholder.com/150" },
+      { id: 3, name: "স্মার্ট ওয়াচ গ্যাজেট", price: 850, image: "https://via.placeholder.com/150" },
+      { id: 4, name: "ক্যাজুয়াল শার্ট", price: 650, image: "https://via.placeholder.com/150" }
+    ];
 
-            // Update Bottom Nav active state
-            if (element) {
-                const navItems = document.querySelectorAll('.nav-item');
-                navItems.forEach(item => item.classList.remove('active'));
-                element.classList.add('active');
-            }
+    let cart = [];
 
-            window.scrollTo(0, 0);
-        }
-    </script>
+    // Render Products
+    function renderProducts() {
+      const container = document.getElementById('product-list');
+      container.innerHTML = products.map(p => `
+        <div class="bg-white rounded-lg shadow p-3 flex flex-col justify-between">
+          <div>
+            <img src="${p.image}" alt="${p.name}" class="w-full h-32 object-cover rounded mb-2">
+            <h4 class="font-bold text-sm mb-1">${p.name}</h4>
+            <p class="text-blue-600 font-bold text-sm mb-2">৳ ${p.price}</p>
+          </div>
+          <button onclick="addToCart(${p.id})" class="w-full bg-blue-600 text-white text-xs py-1.5 rounded font-semibold hover:bg-blue-700">কার্টে যোগ করুন</button>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(id) {
+      const item = products.find(p => p.id === id);
+      cart.push(item);
+      updateCart();
+    }
+
+    function updateCart() {
+      document.getElementById('cart-count').innerText = cart.length;
+      const cartItemsDiv = document.getElementById('cart-items');
+      const totalSpan = document.getElementById('cart-total');
+      
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p class="text-gray-500 text-center py-4">কার্ট খালি রয়েছে</p>';
+        totalSpan.innerText = '0';
+        return;
+      }
+
+      let total = 0;
+      cartItemsDiv.innerHTML = cart.map((item, idx) => {
+        total += item.price;
+        return `
+          <div class="flex justify-between items-center bg-gray-50 p-2 rounded border">
+            <div>
+              <p class="font-bold text-sm">${item.name}</p>
+              <p class="text-xs text-blue-600">৳ ${item.price}</p>
+            </div>
+            <button onclick="removeFromCart(${idx})" class="text-red-500 text-xs hover:underline">মুছে ফেলুন</button>
+          </div>
+        `;
+      }).join('');
+      totalSpan.innerText = total;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function toggleCart() {
+      document.getElementById('cart-modal').classList.toggle('hidden');
+    }
+
+    function showCheckout() {
+      if (cart.length === 0) {
+        alert('আপনার কার্ট খালি!');
+        return;
+      }
+      toggleCart();
+      document.getElementById('checkout-modal').classList.remove('hidden');
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkout-modal').classList.add('hidden');
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById('cust-name').value;
+      const phone = document.getElementById('cust-phone').value;
+      const address = document.getElementById('cust-address').value;
+      const payment = document.getElementById('cust-payment').value;
+      
+      let itemsList = cart.map(i => `- ${i.name} (৳${i.price})`).join('\n');
+      let total = cart.reduce((sum, i) => sum + i.price, 0);
+
+      let msg = `*নতুন অর্ডার (Smart Choice BD)*\n\n*কাস্টমার নাম:* ${name}\n*মোবাইল:* ${phone}\n*ঠিকানা:* ${address}\n*পেমেন্ট মেথড:* ${payment}\n\n*অর্ডারকৃত পণ্যসমূহ:*\n${itemsList}\n\n*মোট বিল:* ৳${total}`;
+
+      let whatsappURL = `https://wa.me/8801875184743?text=${encodeURIComponent(msg)}`;
+      window.open(whatsappURL, '_blank');
+
+      cart = [];
+      updateCart();
+      closeCheckout();
+    }
+
+    function toggleAdminModal() {
+      document.getElementById('admin-modal').classList.toggle('hidden');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('admin-email').value;
+      const pass = document.getElementById('admin-pass').value;
+
+      if (email === 'admin@smartchoicebd.com' && pass === 'admin123') {
+        alert('এডমিন হিসেবে সফলভাবে লগইন করেছেন!');
+        toggleAdminModal();
+      } else {
+        alert('ভুল ইমেইল বা পাসওয়ার্ড!');
+      }
+    }
+
+    renderProducts();
+  </script>
 </body>
 </html>
-
-
