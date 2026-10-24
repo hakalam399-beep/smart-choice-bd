@@ -55,26 +55,19 @@ export const initialStoreData: StoreData = {
       active: true
     }
   ],
-  products: [
-  ...dynamicCustomProducts,
-  {
-    id: "daraz-ems-mini-massager",
-    nameBn: "ইএমএস মিনি বডি ম্যাসেজার (EMS Mini Massager)",
-    nameEn: "Tens Units EMS Mini Massager",
-    descriptionBn: "পিঠ, ঘাড় ও শরীরের যন্ত্রণামুক্তির জন্য রিচার্জেবল ইলেকট্রোম্যাগনেটিক থেরাপি ম্যাসেজার।",
-    descriptionEn: "Muscle Stimulator Full Body Relaxation Machine for Legs, Back & Neck Pain Relief.",
-    price: 169,
-    originalPrice: 690,
-    category: "gadget",
-    image: "https://img.drz.lazcdn.com/g/kf/Sbf9c2c8f8d684070a7b45ad9b794101eQ.jpg",
-    inStock: true,
-    affiliateUrl: "https://s.daraz.com.bd/s.YWD63?cc"
-  }
-],
+  products: [ 
+    {
+      id: "daraz-ems-mini-massager",
+      nameBn: "ইএমএস মিনি বডি ম্যাসেজার (EMS Mini Massager)",
+      nameEn: "Tens Units EMS Mini Massager",
+      descriptionBn: "পিঠ, ঘাড় ও শরীরের যন্ত্রণামুক্তির জন্য রিচার্জেবল ইলেকট্রোম্যাগনেটিক থেরাপি ম্যাসেজার।",
+      descriptionEn: "Muscle Stimulator Full Body Relaxation Machine for Legs, Back & Neck Pain Relief.",
+      price: 169,
+      originalPrice: 690,
+      category: "gadget",
+      image: "https://img.drz.lazcdn.com/g/kf/Sbf9c2c8f8d684070a7b45ad9b794101eQ.jpg",
+      inStock: true,
+      affiliateUrl: "https://s.daraz.com.bd/s.YWD63?cc"
+    }
+  ],
 
-  orders: [],
-  posts: [],
-  admin: {
-    passwordHash: "admin123"
-  }
-};
