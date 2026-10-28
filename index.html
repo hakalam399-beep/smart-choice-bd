@@ -1,232 +1,151 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Choice BD - Online Shop</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="bg-gray-100 text-gray-800 font-sans">
+/**
+ * =======================================================================
+ * SMART CHOICE BD - সহজ প্রোডাক্ট লিস্ট (DYNAMIC PRODUCTS ARRAY)
+ * =======================================================================
+ * আপনি চাইলে এখান থেকে খুব সহজেই নতুন প্রোডাক্ট কোডে যোগ করতে পারেন!
+ * শুধু নিচের নিয়মে নাম, দাম, আগের দাম (বা ডিসকাউন্ট) এবং ছবির লিঙ্ক বসিয়ে দিন:
+ * =======================================================================
+ */
 
-  <!-- Header / Navbar -->
-  <header class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <h1 class="text-xl font-bold">Smart Choice BD</h1>
-      <div class="flex items-center space-x-4">
-        <button onclick="toggleCart()" class="relative bg-blue-700 px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center">
-          <i class="fas fa-shopping-cart mr-1"></i> কার্ট
-          <span id="cart-count" class="ml-2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs">0</span>
-        </button>
-        <button onclick="toggleAdminModal()" class="text-sm bg-blue-800 hover:bg-blue-900 px-2 py-1 rounded">এডমিন</button>
-      </div>
-    </div>
-  </header>
+import { Product } from '../types';
 
-  <!-- Banner -->
-  <section class="bg-blue-500 text-white text-center py-8 px-4">
-    <h2 class="text-2xl font-bold mb-2">স্মার্ট চয়েস বিডি-তে আপনাকে স্বাগতম!</h2>
-    <p class="text-sm">সেরা দামে সেরা পোশাক ও গ্যাজেট কিনুন চট্টগ্রাম সহ সারা বাংলাদেশে।</p>
-  </section>
+export interface SimpleProductItem {
+  id?: string;
+  name: string;               // পণ্যের ইংরেজি নাম (যেমন: "T800 Ultra Smartwatch")
+  nameBn?: string;             // পণ্যের বাংলা নাম (ঐচ্ছিক)
+  price: number;               // বর্তমান বিক্রয় মূল্য (টাকায়)
+  originalPrice?: number;      // আগের দাম / কাটা দাম (ঐচ্ছিক)
+  discountPercentage?: number; // সরাসরি ডিসকাউন্ট পারসেন্টেজ (ঐচ্ছিক)
+  image: string;               // মূল ছবির লিঙ্ক (URL)
+  additionalImages?: string[]; // অতিরিক্ত ছবির লিঙ্ক (ঐচ্ছিক)
+  category?: string;           // ক্যাটাগরি (ডিফল্ট: Gadgets)
+  stock?: number;              // স্টকের সংখ্যা (ডিফল্ট: 50)
+  isFlashDeal?: boolean;       // ধামাকা ডিল ব্যাজ (ডিফল্ট: true)
+  isFeatured?: boolean;        // ফিচার্ড ব্যাজ (ডিফল্ট: true)
+  warranty?: string;           // ওয়ারেন্টি বিবরণ
+  description?: string;        // পণ্যের বিবরণ
+}
 
-  <!-- Product Grid -->
-  <main class="container mx-auto px-4 py-6">
-    <h3 class="text-xl font-bold mb-4 border-b-2 border-blue-600 pb-1 inline-block">আমাদের পণ্যসমূহ</h3>
-    <div id="product-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <!-- Products will render here dynamically -->
-    </div>
-  </main>
+/**
+ * 🛒 আপনার কাস্টম প্রোডাক্ট অ্যারে (এখানে EMS Mini Massager যুক্ত করা হয়েছে)
+ */
+export const dynamicCustomProducts: SimpleProductItem[] = [
+  {
+    id: "prod-t800-ultra",
+    name: "T800 Ultra Smartwatch",
+    nameBn: "টি৮০০ আল্ট্রা স্মার্টওয়াচ (T800 Ultra Smartwatch)",
+    price: 1190,
+    originalPrice: 1500,
+    discountPercentage: 21,
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80",
+    additionalImages: [
+      "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80"
+    ],
+    category: "Smart Watches",
+    stock: 45,
+    isFlashDeal: true,
+    isFeatured: true,
+    warranty: "6 Months Replacement Warranty",
+    description: "1.99\" Infinite HD display, Bluetooth calling, and wireless magnetic charging."
+  },
+  {
+    id: "prod-m10-tws",
+    name: "M10 TWS Earbuds",
+    nameBn: "এম১০ টিডব্লিউএস ইয়ারবাডস (M10 TWS Earbuds)",
+    price: 750,
+    originalPrice: 1200,
+    discountPercentage: 38,
+    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80",
+    additionalImages: [
+      "https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?w=800&auto=format&fit=crop&q=80"
+    ],
+    category: "Wireless Earbuds",
+    stock: 65,
+    isFlashDeal: true,
+    isFeatured: true,
+    warranty: "6 Months Warranty",
+    description: "9D heavy bass stereo sound with digital LED battery display case."
+  },
+  {
+    id: "prod-winter-jacket",
+    name: "Premium Winter Jacket",
+    nameBn: "প্রিমিয়াম উইন্টার জ্যাকেট (Premium Winter Jacket)",
+    price: 1450,
+    originalPrice: 1800,
+    discountPercentage: 19,
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80",
+    additionalImages: [
+      "https://images.unsplash.com/photo-1548883354-7622d03aca27?w=800&auto=format&fit=crop&q=80"
+    ],
+    category: "Fashion & Lifestyle",
+    stock: 40,
+    isFlashDeal: true,
+    isFeatured: true,
+    warranty: "7 Days Easy Replacement",
+    description: "Premium windproof winter jacket with insulated inner thermal lining."
+  },
+  {
+    id: "prod-ems-massager",
+    name: "EMS Mini Massager",
+    nameBn: "ইএমএস মিনি বডি ও নেক ম্যাসাজার (EMS Mini Massager)",
+    price: 390,
+    originalPrice: 750,
+    discountPercentage: 48,
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80",
+    additionalImages: [
+      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&q=80"
+    ],
+    category: "Tech & Lifestyle",
+    stock: 80,
+    isFlashDeal: true,
+    isFeatured: true,
+    warranty: "7 Days Replacement Warranty",
+    description: "EMS Mini Massager pad for neck, back, waist, cervical spine and shoulder pain relief. Features 8 pulse modes, 19 intensity levels, USB rechargeable lightweight portable butterfly design."
+  }
+];
 
-  <!-- Cart Drawer/Modal -->
-  <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-end">
-    <div class="bg-white w-full max-w-md h-full p-4 overflow-y-auto flex flex-col justify-between">
-      <div>
-        <div class="flex justify-between items-center border-b pb-2 mb-4">
-          <h3 class="text-lg font-bold">আপনার শপিং কার্ট</h3>
-          <button onclick="toggleCart()" class="text-gray-500 text-xl">&times;</button>
-        </div>
-        <div id="cart-items" class="space-y-3">
-          <p class="text-gray-500 text-center py-4">কার্ট খালি রয়েছে</p>
-        </div>
-      </div>
-      <div class="border-t pt-4 mt-4">
-        <div class="flex justify-between font-bold mb-4">
-          <span>মোট মূল্য:</span>
-          <span>৳ <span id="cart-total">0</span></span>
-        </div>
-        <button onclick="showCheckout()" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700">অর্ডার সম্পন্ন করুন</button>
-      </div>
-    </div>
-  </div>
+/**
+ * Helper: Converts simple product definitions to complete Store Product objects
+ */
+export function buildProductFromSimple(item: SimpleProductItem, index: number): Product {
+  const originalPrice = item.originalPrice || item.price;
+  const discountPercentage = item.discountPercentage || 
+    (originalPrice > item.price ? Math.round(((originalPrice - item.price) / originalPrice) * 100) : 0);
 
-  <!-- Checkout Modal -->
-  <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg max-w-md w-full p-6 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeCheckout()" class="absolute top-2 right-4 text-gray-500 text-2xl">&times;</button>
-      <h3 class="text-xl font-bold mb-4 text-center">কাস্টমার তথ্য ও অর্ডার</h3>
-      <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-3">
-        <div>
-          <label class="block text-sm font-semibold">আপনার নাম:</label>
-          <input type="text" id="cust-name" required class="w-full border rounded p-2 text-sm">
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">মোবাইল নাম্বার:</label>
-          <input type="tel" id="cust-phone" required class="w-full border rounded p-2 text-sm">
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">ডেলিভারি ঠিকানা:</label>
-          <textarea id="cust-address" required class="w-full border rounded p-2 text-sm" rows="2"></textarea>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">পেমেন্ট মেথড:</label>
-          <select id="cust-payment" class="w-full border rounded p-2 text-sm">
-            <option value="Cash on Delivery">ক্যাশ অন ডেলিভারি</option>
-            <option value="bKash / Nagad">বিকাশ / নগদ (01875184743)</option>
-          </select>
-        </div>
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 mt-2">হোয়াটসঅ্যাপে অর্ডার পাঠান</button>
-      </form>
-    </div>
-  </div>
+  const images = [item.image, ...(item.additionalImages || [])].filter(Boolean);
 
-  <!-- Admin Login Modal -->
-  <div id="admin-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg max-w-sm w-full p-6 relative">
-      <button onclick="toggleAdminModal()" class="absolute top-2 right-4 text-gray-500 text-2xl">&times;</button>
-      <h3 class="text-xl font-bold mb-4 text-center">এডমিন লগইন</h3>
-      <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-        <div>
-          <label class="block text-sm font-semibold">ইমেইল:</label>
-          <input type="email" id="admin-email" required class="w-full border rounded p-2 text-sm">
-        </div>
-        <div>
-          <label class="block text-sm font-semibold">পাসওয়ার্ড:</label>
-          <input type="password" id="admin-pass" required class="w-full border rounded p-2 text-sm">
-        </div>
-        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700">লগইন</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // Initial Products Data
-    let products = [
-      { id: 1, name: "প্রিমিয়াম কটন টি-শার্ট", price: 350, image: "https://via.placeholder.com/150" },
-      { id: 2, name: "স্টাইলিশ জ্যাকেট", price: 1200, image: "https://via.placeholder.com/150" },
-      { id: 3, name: "স্মার্ট ওয়াচ গ্যাজেট", price: 850, image: "https://via.placeholder.com/150" },
-      { id: 4, name: "ক্যাজুয়াল শার্ট", price: 650, image: "https://via.placeholder.com/150" }
-    ];
-
-    let cart = [];
-
-    // Render Products
-    function renderProducts() {
-      const container = document.getElementById('product-list');
-      container.innerHTML = products.map(p => `
-        <div class="bg-white rounded-lg shadow p-3 flex flex-col justify-between">
-          <div>
-            <img src="${p.image}" alt="${p.name}" class="w-full h-32 object-cover rounded mb-2">
-            <h4 class="font-bold text-sm mb-1">${p.name}</h4>
-            <p class="text-blue-600 font-bold text-sm mb-2">৳ ${p.price}</p>
-          </div>
-          <button onclick="addToCart(${p.id})" class="w-full bg-blue-600 text-white text-xs py-1.5 rounded font-semibold hover:bg-blue-700">কার্টে যোগ করুন</button>
-        </div>
-      `).join('');
-    }
-
-    function addToCart(id) {
-      const item = products.find(p => p.id === id);
-      cart.push(item);
-      updateCart();
-    }
-
-    function updateCart() {
-      document.getElementById('cart-count').innerText = cart.length;
-      const cartItemsDiv = document.getElementById('cart-items');
-      const totalSpan = document.getElementById('cart-total');
-      
-      if (cart.length === 0) {
-        cartItemsDiv.innerHTML = '<p class="text-gray-500 text-center py-4">কার্ট খালি রয়েছে</p>';
-        totalSpan.innerText = '0';
-        return;
-      }
-
-      let total = 0;
-      cartItemsDiv.innerHTML = cart.map((item, idx) => {
-        total += item.price;
-        return `
-          <div class="flex justify-between items-center bg-gray-50 p-2 rounded border">
-            <div>
-              <p class="font-bold text-sm">${item.name}</p>
-              <p class="text-xs text-blue-600">৳ ${item.price}</p>
-            </div>
-            <button onclick="removeFromCart(${idx})" class="text-red-500 text-xs hover:underline">মুছে ফেলুন</button>
-          </div>
-        `;
-      }).join('');
-      totalSpan.innerText = total;
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      updateCart();
-    }
-
-    function toggleCart() {
-      document.getElementById('cart-modal').classList.toggle('hidden');
-    }
-
-    function showCheckout() {
-      if (cart.length === 0) {
-        alert('আপনার কার্ট খালি!');
-        return;
-      }
-      toggleCart();
-      document.getElementById('checkout-modal').classList.remove('hidden');
-    }
-
-    function closeCheckout() {
-      document.getElementById('checkout-modal').classList.add('hidden');
-    }
-
-    function submitOrder(e) {
-      e.preventDefault();
-      const name = document.getElementById('cust-name').value;
-      const phone = document.getElementById('cust-phone').value;
-      const address = document.getElementById('cust-address').value;
-      const payment = document.getElementById('cust-payment').value;
-      
-      let itemsList = cart.map(i => `- ${i.name} (৳${i.price})`).join('\n');
-      let total = cart.reduce((sum, i) => sum + i.price, 0);
-
-      let msg = `*নতুন অর্ডার (Smart Choice BD)*\n\n*কাস্টমার নাম:* ${name}\n*মোবাইল:* ${phone}\n*ঠিকানা:* ${address}\n*পেমেন্ট মেথড:* ${payment}\n\n*অর্ডারকৃত পণ্যসমূহ:*\n${itemsList}\n\n*মোট বিল:* ৳${total}`;
-
-      let whatsappURL = `https://wa.me/8801875184743?text=${encodeURIComponent(msg)}`;
-      window.open(whatsappURL, '_blank');
-
-      cart = [];
-      updateCart();
-      closeCheckout();
-    }
-
-    function toggleAdminModal() {
-      document.getElementById('admin-modal').classList.toggle('hidden');
-    }
-
-    function handleAdminLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('admin-email').value;
-      const pass = document.getElementById('admin-pass').value;
-
-      if (email === 'admin@smartchoicebd.com' && pass === 'admin123') {
-        alert('এডমিন হিসেবে সফলভাবে লগইন করেছেন!');
-        toggleAdminModal();
-      } else {
-        alert('ভুল ইমেইল বা পাসওয়ার্ড!');
-      }
-    }
-
-    renderProducts();
-  </script>
-</body>
-</html>
+  return {
+    id: item.id || `custom-prod-${index + 1}-${Date.now()}`,
+    nameEn: item.name,
+    nameBn: item.nameBn || item.name,
+    category: item.category || "Smartphones & Gadgets",
+    price: item.price,
+    originalPrice: originalPrice,
+    discountPercentage: discountPercentage,
+    stock: item.stock !== undefined ? item.stock : 50,
+    images: images.length > 0 ? images : ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800'],
+    rating: 4.8,
+    ratingCount: 120 + (index * 15),
+    descriptionEn: item.description || `${item.name} - 100% authentic product with official warranty and nationwide Cash on Delivery.`,
+    descriptionBn: item.description || `${item.nameBn || item.name} - ১০০% আসল পণ্য, ক্যাশ অন ডেলিভারি ও দ্রুত ডেলিভারির নিশ্চয়তা।`,
+    featuresEn: [
+      "100% Genuine and Brand New Pack",
+      "Cash on Delivery Available Across Bangladesh",
+      "Fast 24-48 Hours Express Dispatch",
+      "7 Days Replacement Guarantee"
+    ],
+    featuresBn: [
+      "১০০% আসল ও ইনটেক্ট পণ্য",
+      "সারাদেশে ক্যাশ অন ডেলিভারি সুবিধা",
+      "দ্রুত ২৪-৪৮ ঘণ্টায় হোম ডেলিভারি",
+      "৭ দিনের পণ্য পরিবর্তনের নিশ্চয়তা"
+    ],
+    sku: `SCBD-${(item.name.replace(/[^A-Za-z0-9]/g, '').slice(0, 8)).toUpperCase() || 'ITEM'}`,
+    isFeatured: item.isFeatured !== false,
+    isFlashDeal: item.isFlashDeal !== false,
+    warranty: item.warranty || "6 Months Warranty",
+    createdAt: new Date().toISOString()
+  };
+}
